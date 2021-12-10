@@ -1,9 +1,9 @@
 cmake_minimum_required (VERSION 3.19)
-SET(CMAKE_C_COMPILER "/usr/bin/clang")
-SET(CMAKE_CXX_COMPILER "/usr/bin/clang++")
+set(CMAKE_C_COMPILER "/usr/bin/clang")
+set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
 set(CMAKE_CXX_STANDARD 17)
-add_definitions("-Wall -g")
-
+# add_definitions("-Wall -g")
+set(PROJECT_SOURCE_DIR "-Wall -g")
 
 project(mtt_pathTracingRender)
 
@@ -17,8 +17,8 @@ add_executable(pathTracing
 
 
 # for unit test
-include_directories("./submodules/googletest/googletest/include")
-link_directories("./submodules/googletest/build/lib")
+include_directories("${PROJECT_SOURCE_DIR}/submodules/googletest/googletest/include")
+link_directories("${PROJECT_SOURCE_DIR}/submodules/googletest/build/lib")
 
 add_executable(Renderer_TestSuite 
     src/test/Renderer_TestSuite.cpp
