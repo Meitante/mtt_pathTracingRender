@@ -1,4 +1,4 @@
 #include <gtest/gtest.h>
-#include "Scene.h"
+#include "Ray.h"
 
 

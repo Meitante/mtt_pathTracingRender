@@ -4,6 +4,8 @@
 #include <eigen3/Eigen/Eigen>
 #include <iostream>
 
+#include "Ray.h"
+
 class Scene
 {
 public:
@@ -11,12 +13,14 @@ public:
     Scene(const Scene& s) = delete;
     Scene(Scene&& s) = delete;
     
-    
+    // Eigen::Vector3f getColorFromTracingRay(const Ray&);
+    void setEyePos(const Eigen::Vector3f& in_eyePos);
 
 public:
     unsigned int width;
     unsigned int height;
-    
+    Eigen::Vector3f eyePos;
+
     Eigen::Vector3f backgroundColor;
 
 private:

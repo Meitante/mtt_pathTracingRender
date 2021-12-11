@@ -7,10 +7,11 @@
 #include <vector>
 #include <memory>
 #include <eigen3/Eigen/Eigen>
-#include "Scene.h"
 #include <cstdlib>
 #include <algorithm>
 
+
+#include "Scene.h"
 
 /*
     Main renderer, output as a ppm

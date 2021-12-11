@@ -17,6 +17,7 @@ add_executable(pathTracing
     src/main.cpp
     src/Renderer.cpp
     src/Scene.cpp
+    src/Ray.cpp
 )
 target_link_libraries(pathTracing ${OpenCV_LIBRARIES})
 
@@ -25,18 +26,24 @@ target_link_libraries(pathTracing ${OpenCV_LIBRARIES})
 # for unit test
 include_directories("${PROJECT_SOURCE_DIR}/submodules/googletest/googletest/include")
 link_directories("${PROJECT_SOURCE_DIR}/submodules/googletest/build/lib")
-
-
+set(librariesList gtest gtest_main ${OpenCV_LIBRARIES})
 
 add_executable(Renderer_TestSuite 
     src/test/Renderer_TestSuite.cpp
     src/Renderer.cpp
     src/Scene.cpp
 )
-target_link_libraries(Renderer_TestSuite gtest gtest_main ${OpenCV_LIBRARIES})
+target_link_libraries(Renderer_TestSuite ${librariesList})
 
 add_executable(Scene_TestSuite 
     src/test/Scene_TestSuite.cpp
     src/Scene.cpp
 )
-target_link_libraries(Scene_TestSuite gtest gtest_main ${OpenCV_LIBRARIES})
+target_link_libraries(Scene_TestSuite ${librariesList})
+
+add_executable(Ray_TestSuite 
+    src/test/Ray_TestSuite.cpp
+    src/Ray.cpp
+)
+
+target_link_libraries(Ray_TestSuite ${librariesList})
