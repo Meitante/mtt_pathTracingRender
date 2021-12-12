@@ -35,12 +35,16 @@ add_executable(Renderer_TestSuite
     src/test/Renderer_TestSuite.cpp
     src/Renderer.cpp
     src/Scene.cpp
+    src/Ray.cpp
+    src/BoundingBox.cpp
 )
 target_link_libraries(Renderer_TestSuite ${librariesList})
 
 add_executable(Scene_TestSuite
     src/test/Scene_TestSuite.cpp
     src/Scene.cpp
+    src/Ray.cpp
+    src/BoundingBox.cpp
 )
 target_link_libraries(Scene_TestSuite ${librariesList})
 
@@ -56,6 +60,7 @@ add_executable(BoundingBox_TestSuite
     src/Ray.cpp
     src/BoundingBox.cpp
     src/Sphere.cpp
+    src/Intersection.cpp
 )
 
 target_link_libraries(BoundingBox_TestSuite ${librariesList})

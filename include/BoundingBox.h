@@ -4,6 +4,7 @@
 #include <eigen3/Eigen/Eigen>
 #include <iostream>
 #include "Ray.h"
+#include "Intersection.h"
 
 /*
     Every sides are parallel to coordinate axis

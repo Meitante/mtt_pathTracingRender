@@ -5,6 +5,8 @@
 
 #include "Renderer.h"
 
+inline float deg2rad(const float& deg) { return deg * M_PI / 180.0; }
+
 Renderer::Renderer(std::unique_ptr<Scene> in_scene, std::string in_outputPath)
 :scene(std::move(in_scene))
 ,outputPath(in_outputPath)
@@ -24,6 +26,8 @@ unsigned int Renderer::getFramebufferPosFromXY(unsigned int x, unsigned int y)
 
 void Renderer::render()
 {
+    float scale = tan(deg2rad(scene->fov * 0.5));
+    float imageAspectRatio = scene->width / (float)scene->height;
     
     /*
         framebuffer from 0 to scene->width * scene->height - 1
@@ -44,7 +48,7 @@ void Renderer::render()
     {
         for(unsigned int y = 0; y < scene->height; ++y)
         {
-            framebuffer[getFramebufferPosFromXY(x, y)] = scene->backgroundColor;
+            framebuffer[getFramebufferPosFromXY(x, y)] = Eigen::Vector3f(0, 0, 0);// scene->backgroundColor;
         }
     }
     assert(framebuffer.size() == scene->width * scene->height);
@@ -53,27 +57,52 @@ void Renderer::render()
     /*
         two test code block for make sure the 
     */
-    {
-            unsigned int x = 100;
-            for(unsigned int y = 0; y < scene->height; ++y)
-            {
-                static unsigned int posFramebuffer =  0;
-                posFramebuffer = getFramebufferPosFromXY(x, y);
-                framebuffer[posFramebuffer] = Eigen::Vector3f(240.0f/255, 0.0f, 0.0f);
-            }
+    // {
+    //         unsigned int x = 100;
+    //         for(unsigned int y = 0; y < scene->height; ++y)
+    //         {
+    //             static unsigned int posFramebuffer =  0;
+    //             posFramebuffer = getFramebufferPosFromXY(x, y);
+    //             framebuffer[posFramebuffer] = Eigen::Vector3f(240.0f/255, 0.0f, 0.0f);
+    //         }
 
+    // }
+
+    // {
+    //         unsigned int y = 50;
+    //         for(unsigned int x = 0; x < scene->width; ++x)
+    //         {
+    //             static unsigned int posFramebuffer =  0;
+    //             posFramebuffer = getFramebufferPosFromXY(x, y);
+    //             framebuffer[posFramebuffer] = Eigen::Vector3f(0.0f, 240.0f/255, 0.0f);
+    //         }
+
+    // }
+
+    float height = 2*scale*1;
+    float width = imageAspectRatio * height;
+    int spp = 1;
+    for(int i  = 0; i < scene->width; ++i)
+    {
+        for(int j = 0; j < scene->height; ++j)
+        {
+            int m = getFramebufferPosFromXY(i, j);
+
+            float x = -width/2 + width*(i + 0.5)/scene->width;
+            float y = -height/2 + height*(j + 0.5)/scene->height;
+            Eigen::Vector3f dir = Eigen::Vector3f(x, y, -1);
+            dir.normalize();
+            for(int k = 0; k < spp; ++k)
+            {
+                framebuffer[m] = scene->getColorByTracingRay(Ray(scene->eyePos, dir))/spp;
+            }
+        }
     }
 
-    {
-            unsigned int y = 50;
-            for(unsigned int x = 0; x < scene->width; ++x)
-            {
-                static unsigned int posFramebuffer =  0;
-                posFramebuffer = getFramebufferPosFromXY(x, y);
-                framebuffer[posFramebuffer] = Eigen::Vector3f(0.0f, 240.0f/255, 0.0f);
-            }
 
-    }
+
+
+
 
     // start output to ppm
     {

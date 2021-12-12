@@ -4,7 +4,7 @@
 #include "BoundingBox.h"
 
 
-constexpr float PI = 3.1415926;
+
 
 /*
     An abstract class for all kinds of objects.
@@ -19,6 +19,7 @@ public:
 
     virtual BoundingBox getBoundingBox() = 0;
     virtual float getSurfaceArea() = 0;
+    virtual Intersection getIntersectionWithRay(const Ray& ray) = 0;
 
 };
 
