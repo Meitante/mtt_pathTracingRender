@@ -1,5 +1,5 @@
-#ifndef RAYTRACING_RENDERER_H
-#define RAYTRACING_RENDERER_H
+#ifndef PATHTRACING_RENDERER_H
+#define PATHTRACING_RENDERER_H
 
 #include <iostream>
 #include <fstream>

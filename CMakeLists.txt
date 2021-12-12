@@ -18,6 +18,9 @@ add_executable(pathTracing
     src/Renderer.cpp
     src/Scene.cpp
     src/Ray.cpp
+    src/BoundingBox.cpp
+    src/Intersection.cpp
+    src/Sphere.cpp
 )
 target_link_libraries(pathTracing ${OpenCV_LIBRARIES})
 
@@ -35,7 +38,7 @@ add_executable(Renderer_TestSuite
 )
 target_link_libraries(Renderer_TestSuite ${librariesList})
 
-add_executable(Scene_TestSuite 
+add_executable(Scene_TestSuite
     src/test/Scene_TestSuite.cpp
     src/Scene.cpp
 )
@@ -47,3 +50,19 @@ add_executable(Ray_TestSuite
 )
 
 target_link_libraries(Ray_TestSuite ${librariesList})
+
+add_executable(BoundingBox_TestSuite 
+    src/test/BoundingBox_TestSuite.cpp
+    src/Ray.cpp
+    src/BoundingBox.cpp
+    src/Sphere.cpp
+)
+
+target_link_libraries(BoundingBox_TestSuite ${librariesList})
+
+add_executable(Intersection_TestSuite 
+    src/test/Intersection_TestSuite.cpp
+    src/Intersection.cpp
+)
+
+target_link_libraries(Intersection_TestSuite ${librariesList})
