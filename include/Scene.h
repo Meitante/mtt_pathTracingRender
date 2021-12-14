@@ -19,9 +19,10 @@ public:
     Scene(Scene&& s) = delete;
 
 
-    Eigen::Vector3f getColorByTracingRay(const Ray& ray);
+    Eigen::Vector3f getColorByTracingRay(const Ray& ray, int depth = 0);
     void setEyePos(const Eigen::Vector3f& in_eyePos);
     void addObject(std::unique_ptr<Object> obj);
+    Intersection getIntersectionWithRay(const Ray& ray);
 
 public:
     unsigned int width;

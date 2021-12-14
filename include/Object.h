@@ -2,6 +2,7 @@
 #define PATHTRACING_OBJECT_H
 
 #include "BoundingBox.h"
+#include "Material.h"
 
 
 
@@ -13,13 +14,18 @@
 class Object
 {
 public:
-    Object(){};
+    Object()
+    :material()
+    {};
     virtual ~Object(){};
 
 
     virtual BoundingBox getBoundingBox() = 0;
     virtual float getSurfaceArea() = 0;
     virtual Intersection getIntersectionWithRay(const Ray& ray) = 0;
+
+public:
+    Material material;
 
 };
 

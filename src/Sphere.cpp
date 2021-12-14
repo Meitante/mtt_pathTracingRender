@@ -47,16 +47,18 @@ Intersection Sphere::getIntersectionWithRay(const Ray& ray)
         */
         t0 = t1;
     }
-    if (t0 < 0)
+    if (t0 <= 0.5)
     {
         // isHappened being false by default
         return intersection;
     }
 
+
     intersection.isHappened = true;
     intersection.coordinate = ray.getDestinationAfterT(t0);
     intersection.normal = intersection.coordinate - centre;
     intersection.normal = intersection.normal.normalized();
+    intersection.material = material;
 
     return intersection;
 }

@@ -3,17 +3,17 @@
 
 #include <eigen3/Eigen/Eigen>
 #include "utility.hpp"
+#include "Material.h"
 
 class Intersection
 {
 public:
     Intersection();
-    Intersection(const Intersection& intersection) = default;
-    Intersection(Intersection&& intersection) = default;
     
     bool isHappened;
     Eigen::Vector3f coordinate;
     Eigen::Vector3f normal;
+    Material material;
 };
 
 #endif

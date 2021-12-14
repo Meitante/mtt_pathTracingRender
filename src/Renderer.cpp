@@ -81,7 +81,8 @@ void Renderer::render()
 
     float height = 2*scale*1;
     float width = imageAspectRatio * height;
-    int spp = 1;
+    int spp = 2;
+    int done = 0;
     for(int i  = 0; i < scene->width; ++i)
     {
         for(int j = 0; j < scene->height; ++j)
@@ -94,12 +95,14 @@ void Renderer::render()
             dir.normalize();
             for(int k = 0; k < spp; ++k)
             {
-                framebuffer[m] = scene->getColorByTracingRay(Ray(scene->eyePos, dir))/spp;
+                framebuffer[m] += scene->getColorByTracingRay(Ray(scene->eyePos, dir))/spp;
             }
+            done++;
+            UpdateProgress(done, scene->width * scene->height);
         }
     }
 
-
+    UpdateProgress(done, scene->width * scene->height);
 
 
 
