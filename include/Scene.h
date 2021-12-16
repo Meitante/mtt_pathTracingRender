@@ -23,6 +23,7 @@ public:
     void setEyePos(const Eigen::Vector3f& in_eyePos);
     void addObject(std::unique_ptr<Object> obj);
     Intersection getIntersectionWithRay(const Ray& ray);
+    void sampleLight(Intersection& intersection, float& pdf) const;
 
 public:
     unsigned int width;

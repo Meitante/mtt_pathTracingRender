@@ -7,7 +7,7 @@ Material::Material(MaterialType t, Eigen::Vector3f m)
 
 }
 
-bool Material::hasEmission()
+bool Material::hasEmission() const
 {
     return std::fabs(emission[0] + emission[1] + emission[2]);
 }
@@ -83,7 +83,7 @@ Eigen::Vector3f Material::getBRDF(const Eigen::Vector3f &wi, const Eigen::Vector
             // calculate the contribution of diffuse   model
             float cosalpha = N.dot(wo);
             if (cosalpha > 0.0f) {
-                return  Eigen::Vector3f(0.0f, 0.8f, 0.2f) / PI;
+                return  Eigen::Vector3f(0.0f, 0.4f, 1.0f) / PI;
             }
             else
                 return Eigen::Vector3f(0, 0, 0);

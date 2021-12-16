@@ -8,6 +8,7 @@
 
 constexpr float PI = 3.1415926;
 constexpr float RussianRoulette = 0.8;
+constexpr bool sw1 = false;
 
 /*
     x0 should be less than or equal to x1

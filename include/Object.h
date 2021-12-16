@@ -21,8 +21,18 @@ public:
 
 
     virtual BoundingBox getBoundingBox() = 0;
-    virtual float getSurfaceArea() = 0;
+    virtual float getSurfaceArea() const = 0 ;
     virtual Intersection getIntersectionWithRay(const Ray& ray) = 0;
+    /*
+        randomly sample a point in the surface,
+        intersection information is outputed as the point,
+        also output PDF
+    */
+    virtual void Sample(Intersection& intersection, float& pdf) const = 0;
+    virtual bool hasEmission() const
+    {
+        return material.hasEmission();
+    }
 
 public:
     Material material;

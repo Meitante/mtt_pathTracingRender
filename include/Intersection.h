@@ -14,6 +14,7 @@ public:
     Eigen::Vector3f coordinate;
     Eigen::Vector3f normal;
     Material material;
+    float tOfRayWhenIntersected; // a recording value, not necesary
 };
 
 #endif

@@ -13,8 +13,12 @@ public:
     Sphere(float x, float y, float z, float r = 0.0);
 
     virtual BoundingBox getBoundingBox() override;
-    virtual float getSurfaceArea() override;
+    virtual float getSurfaceArea() const override;
     virtual Intersection getIntersectionWithRay(const Ray& ray) override;
+    virtual void Sample(Intersection& intersection, float& pdf) const override;
+
+    bool isInSurface(Eigen::Vector3f pos) const;
+
 
 public:
     Eigen::Vector3f centre;
