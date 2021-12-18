@@ -9,6 +9,7 @@
 #include <eigen3/Eigen/Eigen>
 #include <cstdlib>
 #include <algorithm>
+#include <chrono>
 
 
 #include "Scene.h"
@@ -28,7 +29,7 @@ public:
     */
     void render();
     unsigned int getFramebufferPosFromXY(unsigned int x, unsigned int y);
-
+    void renderWithTimestampLogged();
 private:
     std::unique_ptr<Scene> scene;
     std::string outputPath;

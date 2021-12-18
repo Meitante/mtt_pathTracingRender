@@ -23,6 +23,23 @@ unsigned int Renderer::getFramebufferPosFromXY(unsigned int x, unsigned int y)
     return y + x * scene->height;
 }
 
+void Renderer::renderWithTimestampLogged()
+{
+    auto start = std::chrono::system_clock::now();
+    render();
+    auto stop = std::chrono::system_clock::now();
+
+    std::cout << "Render complete: \n";
+    auto minutes = std::chrono::duration_cast<std::chrono::minutes>(stop - start).count();
+    auto seconds = std::chrono::duration_cast<std::chrono::seconds>(stop - start).count();
+    auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
+    milliseconds -= seconds * 1000;
+    seconds -= minutes*60; 
+    std::cout << "Time taken: \n";
+    std::cout << "           " << minutes << " minutes\n";
+    std::cout << "           " << seconds << " seconds\n";
+    std::cout << "           " << milliseconds << " milliseconds\n";
+}
 
 void Renderer::render()
 {
