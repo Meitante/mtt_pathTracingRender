@@ -10,12 +10,12 @@
 // TODO: bvh
 // TODO: the mapping from radiance to RGB
 // Done: time record
-// TODO: DIFFUSE kd
+// TODO: DIFFUSE kd/understand it.
 
 int main()
 {
-    auto scene = std::make_unique<Scene>(480, 270);
-    // auto scene = std::make_unique<Scene>(2160, 1600);
+    // auto scene = std::make_unique<Scene>(480, 270);
+    auto scene = std::make_unique<Scene>(2160, 1600);
     // auto scene = std::make_unique<Scene>(1080, 800);
     scene->setEyePos(Eigen::Vector3f(0, 0, 2000));
     Eigen::Vector3f aLight(8.0f * Eigen::Vector3f(0.747f+0.058f, 0.747f+0.258f, 0.747f) + 
@@ -24,7 +24,9 @@ int main()
     // Todo: figure out what is the map from raidance to this RGB or vector
     // (8.0f * Vector3f(0.747f+0.058f, 0.747f+0.258f, 0.747f) + 15.6f * Vector3f(0.740f+0.287f,0.740f+0.160f,0.740f) + 18.4f *Vector3f(0.737f+0.642f,0.737f+0.159f,0.737f))
     auto m1 = Material(Material::MaterialType::DIFFUSE, aLight * 500);
+    
     auto m2 = Material(Material::MaterialType::DIFFUSE);
+    m2.setDiffuseKd(Eigen::Vector3f(0.0f, 0.4f, 0.6f));
 
     auto sphere1 = std::make_unique<Sphere>(-100, 100, -200, 50);
     sphere1->material = m1;

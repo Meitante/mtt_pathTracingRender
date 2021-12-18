@@ -3,6 +3,7 @@
 Material::Material(MaterialType t, Eigen::Vector3f m)
 :type(t)
 ,emission(m)
+,diffuseKd(std::numeric_limits<float>::infinity(), 0, 0)
 {
 
 }
@@ -74,6 +75,12 @@ float Material::getPDF([[maybe_unused]]const Eigen::Vector3f &wi, const Eigen::V
     assert(false);
 }
 
+void Material::setDiffuseKd(const Eigen::Vector3f& kd)
+{
+    assert(type == MaterialType::DIFFUSE);
+    diffuseKd = kd;
+}
+
 Eigen::Vector3f Material::getBRDF(const Eigen::Vector3f &wi, const Eigen::Vector3f &wo, const Eigen::Vector3f &N) const
 {
     switch(type)
@@ -81,9 +88,12 @@ Eigen::Vector3f Material::getBRDF(const Eigen::Vector3f &wi, const Eigen::Vector
         case MaterialType::DIFFUSE:
         {
             // calculate the contribution of diffuse   model
+            // TODO: figure out how diffuse brdf get.
+            assert(diffuseKd.x() < 1.0f + 0.0001);
             float cosalpha = N.dot(wo);
-            if (cosalpha > 0.0f) {
-                return  Eigen::Vector3f(0.0f, 0.4f, 1.0f) / PI;
+            if (cosalpha > 0.0f)
+            {
+                return  diffuseKd / PI;
             }
             else
                 return Eigen::Vector3f(0, 0, 0);
