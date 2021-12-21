@@ -16,6 +16,13 @@ BoundingBox::BoundingBox(float minX, float minY, float minZ, float maxX, float m
 
 }
 
+BoundingBox::BoundingBox(const Eigen::Vector3f& min, const Eigen::Vector3f& max)
+:pMin(min)
+,pMax(max)
+{
+
+}
+
 
 BoundingBox::BoundingBox(const BoundingBox& b)
 {

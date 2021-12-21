@@ -16,6 +16,7 @@ class BoundingBox
 public:
     BoundingBox();
     BoundingBox(float minx, float minY, float minZ, float maxX, float maxY, float maxZ);
+    BoundingBox(const Eigen::Vector3f& min, const Eigen::Vector3f& max);
     BoundingBox(const BoundingBox& b);
     ~BoundingBox(){};
 

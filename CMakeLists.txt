@@ -19,6 +19,7 @@ set(srcList
     src/Intersection.cpp
     src/Sphere.cpp
     src/Material.cpp
+    src/Triangle.cpp
 )
 
 # SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/lib)
@@ -55,17 +56,19 @@ target_link_libraries(Scene_TestSuite ${UTlibrariesList})
 add_executable(Ray_TestSuite
     src/test/Ray_TestSuite.cpp
 )
-
 target_link_libraries(Ray_TestSuite ${UTlibrariesList})
 
 add_executable(BoundingBox_TestSuite 
     src/test/BoundingBox_TestSuite.cpp
 )
-
 target_link_libraries(BoundingBox_TestSuite ${UTlibrariesList})
 
 add_executable(Intersection_TestSuite
     src/test/Intersection_TestSuite.cpp
 )
-
 target_link_libraries(Intersection_TestSuite ${UTlibrariesList})
+
+add_executable(Object_TestSuite
+    src/test/Object_TestSuite.cpp
+)
+target_link_libraries(Object_TestSuite ${UTlibrariesList})

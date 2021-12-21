@@ -20,7 +20,7 @@ Sphere::Sphere(float x, float y, float z, float r)
 }
 
 
-BoundingBox Sphere::getBoundingBox()
+BoundingBox Sphere::getBoundingBox() const
 {
     return BoundingBox(centre.x() - radius, centre.y() - radius, centre.z() - radius,
                        centre.x() + radius, centre.y() + radius, centre.z() + radius);
@@ -33,8 +33,18 @@ float Sphere::getSurfaceArea() const
 
 void Sphere::Sample(Intersection& intersection, float& pdf) const
 {
-    float theta = 2.0 * PI * getRandomFloat(), phi = PI * getRandomFloat();
-    Eigen::Vector3f dir(std::sin(phi)*std::cos(theta), std::sin(phi)*std::sin(theta), std::cos(phi));
+    /*
+        uniform sample in a sphere surface
+    */
+    float a = getRandomFloat();
+    float b = getRandomFloat();
+    Eigen::Vector3f dir(
+        2 * std::cos(2 * PI * b) * std::sqrt(a*(1-a)),
+        2 * std::sin(2 * PI * b) * std::sqrt(a*(1-a)),
+        (1 - 2 * a)
+    );
+    // float theta = 2.0 * PI * getRandomFloat(), phi = PI * getRandomFloat();
+    // Eigen::Vector3f dir(std::sin(phi)*std::cos(theta), std::sin(phi)*std::sin(theta), std::cos(phi));
     intersection.coordinate = centre + radius * dir;
     intersection.normal = dir;
     intersection.material = material;

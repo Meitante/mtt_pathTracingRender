@@ -16,9 +16,13 @@ bool Material::hasEmission() const
 
 Eigen::Vector3f Material::sampleStandardDirection() const
 {
-    // float theta = 2 * PI * getRandomFloat();
-    // float phi = 2 * PI * getRandomFloat();
-    // return Eigen::Vector3f(std::cos(theta)*std::sin(phi), std::sin(theta)*std::sin(phi), std::cos(phi));
+    /*
+        uniform sample in the semisphere
+        uniform definition:
+            Given any tiny area in the surface, the probability of
+            a sampled point locating inside this area is invariant
+            whatever which area being considerd.
+    */
     float x_1 = getRandomFloat(), x_2 = getRandomFloat();
     float z = std::fabs(1.0f - 2.0f * x_1);
     float r = std::sqrt(1.0f - z * z), phi = 2 * PI * x_2;

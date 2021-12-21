@@ -14,10 +14,14 @@
 
 int main()
 {
-    // auto scene = std::make_unique<Scene>(480, 270);
-    auto scene = std::make_unique<Scene>(2160, 1600);
+    auto scene = std::make_unique<Scene>(480, 270);
+    // auto scene = std::make_unique<Scene>(2160, 1600);
     // auto scene = std::make_unique<Scene>(1080, 800);
     scene->setEyePos(Eigen::Vector3f(0, 0, 2000));
+
+    /*
+        fengexian first start test startTo
+    */
     Eigen::Vector3f aLight(8.0f * Eigen::Vector3f(0.747f+0.058f, 0.747f+0.258f, 0.747f) + 
                             15.6f * Eigen::Vector3f(0.740f+0.287f,0.740f+0.160f,0.740f) + 
                             18.4f * Eigen::Vector3f(0.737f+0.642f,0.737f+0.159f,0.737f));
@@ -40,7 +44,9 @@ int main()
     sphere5->material = m2;
     auto sphere6 = std::make_unique<Sphere>(-1500, 0, 0, 800);
     sphere6->material = m2;
-
+    /*
+        fengexian first start test End
+    */
 
     scene->addObject(std::move(sphere1));
     scene->addObject(std::move(sphere2));

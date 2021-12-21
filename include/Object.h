@@ -20,7 +20,7 @@ public:
     virtual ~Object(){};
 
 
-    virtual BoundingBox getBoundingBox() = 0;
+    virtual BoundingBox getBoundingBox() const = 0;
     virtual float getSurfaceArea() const = 0 ;
     virtual Intersection getIntersectionWithRay(const Ray& ray) = 0;
     /*

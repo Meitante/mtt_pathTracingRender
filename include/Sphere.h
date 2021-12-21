@@ -12,7 +12,7 @@ public:
     Sphere(const Eigen::Vector3f& pos = Eigen::Vector3f(0, 0, 0), float r = 0.0f);
     Sphere(float x, float y, float z, float r = 0.0);
 
-    virtual BoundingBox getBoundingBox() override;
+    virtual BoundingBox getBoundingBox() const override;
     virtual float getSurfaceArea() const override;
     virtual Intersection getIntersectionWithRay(const Ray& ray) override;
     virtual void Sample(Intersection& intersection, float& pdf) const override;
