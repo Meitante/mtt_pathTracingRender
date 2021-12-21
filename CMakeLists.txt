@@ -3,6 +3,7 @@ set(CMAKE_C_COMPILER "/usr/bin/clang")
 set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
 set(CMAKE_CXX_STANDARD 17)
 # set(PROJECT_SOURCE_DIR "-Wall -g")
+add_definitions("-Wall -g")
 
 project(mtt_pathTracingRender)
 

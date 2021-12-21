@@ -10,6 +10,8 @@
 #include <cstdlib>
 #include <algorithm>
 #include <chrono>
+#include <mutex>
+#include <thread>
 
 
 #include "Scene.h"

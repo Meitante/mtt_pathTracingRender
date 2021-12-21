@@ -5,6 +5,7 @@
 
 #include "Renderer.h"
 
+std::mutex mutex_ins;
 inline float deg2rad(const float& deg) { return deg * M_PI / 180.0; }
 
 Renderer::Renderer(std::unique_ptr<Scene> in_scene, std::string in_outputPath)
@@ -100,26 +101,78 @@ void Renderer::render()
     float width = imageAspectRatio * height;
     int spp = 32;
     int done = 0;
-    for(int i  = 0; i < scene->width; ++i)
+    /*
+        multithreading or not.
+    */
+    if(true)
     {
-        for(int j = 0; j < scene->height; ++j)
+        auto castRayMultiThreading = [&](uint32_t rowStart, uint32_t rowEnd)
         {
-            int m = getFramebufferPosFromXY(i, j);
-
-            float x = -width/2 + width*(i + 0.5)/scene->width;
-            float y = -height/2 + height*(j + 0.5)/scene->height;
-            Eigen::Vector3f dir = Eigen::Vector3f(x, y, -1);
-            dir.normalize();
-            for(int k = 0; k < spp; ++k)
+            std::string a = "start rendering row : " + std::to_string(rowStart) + " to " + std::to_string(rowEnd);
+            std::cout << a << std::endl;
+            for(uint32_t i = 0; i < scene->width; ++i)
             {
-                framebuffer[m] += scene->getColorByTracingRay(Ray(scene->eyePos, dir))/spp;
-            }
-            done++;
-            UpdateProgress(done, scene->width * scene->height);
-        }
-    }
+                for(uint32_t j = rowStart; j < rowEnd; ++j)
+                {
+                    int m = getFramebufferPosFromXY(i, j);
 
-    UpdateProgress(done, scene->width * scene->height);
+                    float x = -width/2 + width*(i + 0.5)/scene->width;
+                    float y = -height/2 + height*(j + 0.5)/scene->height;
+                    Eigen::Vector3f dir = Eigen::Vector3f(x, y, -1);
+                    dir.normalize();
+                    for(int k = 0; k < spp; ++k)
+                    {
+                        framebuffer[m] += scene->getColorByTracingRay(Ray(scene->eyePos, dir))/spp;
+                    }
+                    done++;
+                    std::lock_guard<std::mutex> g1(mutex_ins);
+                    UpdateProgress(done, scene->width * scene->height);
+                }
+            }
+        };
+
+        int id = 0;
+        constexpr int numOfThreading = 8;
+        std::vector<std::thread> th(numOfThreading);
+
+        int strideY = (scene->height + 1) / (numOfThreading - 1);
+        for(unsigned int i = 0; i < scene->height; i += strideY)
+        {
+            th[id] = std::thread(castRayMultiThreading, i , std::min(i + strideY, scene->height));
+            id++;
+        }
+
+        for (int i = 0; i < numOfThreading; i++)
+        {
+            th[i].join();
+        }
+        UpdateProgress(scene->width * scene->height, scene->width * scene->height);
+
+    }
+    else
+    {
+        for(int i  = 0; i < scene->width; ++i)
+        {
+            for(int j = 0; j < scene->height; ++j)
+            {
+                int m = getFramebufferPosFromXY(i, j);
+
+                float x = -width/2 + width*(i + 0.5)/scene->width;
+                float y = -height/2 + height*(j + 0.5)/scene->height;
+                Eigen::Vector3f dir = Eigen::Vector3f(x, y, -1);
+                dir.normalize();
+                for(int k = 0; k < spp; ++k)
+                {
+                    framebuffer[m] += scene->getColorByTracingRay(Ray(scene->eyePos, dir))/spp;
+                }
+                done++;
+                UpdateProgress(done, scene->width * scene->height);
+            }
+        }
+
+        UpdateProgress(done, scene->width * scene->height);
+    }
+    
 
 
 
