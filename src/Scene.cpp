@@ -129,6 +129,12 @@ Eigen::Vector3f Scene::getColorByTracingRay(const Ray& ray, int depth)
 			dirL = 1.0f * Eigen::Vector3f(lightEmission[0] * BRDF[0], lightEmission[1] * BRDF[1], lightEmission[2] * BRDF[2])
                     * lightDir.dot(N) 
                     * (-lightDir).dot(NN) / lightDistanceSquare / lightPDF;
+            // std::cout << " lightPDF: " << lightPDF <<
+            //              " lightDistance:" << lightDistanceSquare <<
+
+            //              " BRDF: " << BRDF[0] << " " << BRDF[1] << " " << BRDF[2] <<
+            //              " lightEmission: " << lightEmission[0] << " " << lightEmission[1] << " " << lightEmission[2] <<
+            //              " dirL: " << dirL[0] << " " << dirL[1] << " " << dirL[2] << std::endl;
 		}
 
         // return dirL + indirL;

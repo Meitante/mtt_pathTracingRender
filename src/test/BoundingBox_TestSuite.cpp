@@ -13,7 +13,7 @@ TEST(BoundingBox_TestSuite, isDiagonal)
     b2.pMax = {1, 1, 1};
 
     auto diagonal1 = b1.getDiagonal();
-    auto diagonal2 = b2.getDiagonal();
+    // auto diagonal2 = b2.getDiagonal();
 
     ASSERT_FLOAT_EQ(diagonal1.dot(diagonal1), 19.0f);
 

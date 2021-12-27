@@ -7,7 +7,7 @@ Triangle::Triangle(const Eigen::Vector3f& v0, const Eigen::Vector3f& v1, const E
 ,vertex2(v2)
 ,edge1(vertex1 - vertex0)
 ,edge2(vertex2 - vertex0)
-,normal(edge1.cross(edge2))
+,normal((edge1.cross(edge2)).normalized())
 ,area((edge1.cross(edge2)).norm()*0.5f)
 {
     assert(vertex0 != vertex1 and vertex1 != vertex2 and vertex2 != vertex0);
@@ -38,8 +38,39 @@ float Triangle::getSurfaceArea() const
 
 Intersection Triangle::getIntersectionWithRay(const Ray& ray)
 {
-    Intersection b;
-    return b;
+    Intersection intersection;
+    // TODO:understand it
+    if (ray.direction.dot(normal) > 0)
+        return intersection;
+    float u, v, t_tmp = 0;
+    Eigen::Vector3f S1 = ray.direction.cross(edge2);
+    float det = edge1.dot(S1);
+    if (std::fabs(det) < 0.00001)
+        return intersection;
+
+    float invDet = 1. / det;
+    Eigen::Vector3f S = ray.origin - vertex0;
+    u = S.dot(S1) * invDet;
+    if (u < 0 || u > 1)
+        return intersection;
+    Eigen::Vector3f S2 = S.cross(edge1);
+    v = ray.direction.dot(S2) * invDet;
+    if (v < 0 || u + v > 1)
+        return intersection;
+    t_tmp = edge2.dot(S2) * invDet;
+    if (t_tmp < 0)
+    {
+        return intersection;
+    }
+
+    
+    intersection.isHappened = true;
+    intersection.coordinate = ray.getDestinationAfterT(t_tmp);
+    intersection.normal = normal;
+    intersection.tOfRayWhenIntersected = t_tmp;
+    intersection.material = material; 
+
+    return intersection;
 }
 
 

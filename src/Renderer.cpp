@@ -108,8 +108,8 @@ void Renderer::render()
     {
         auto castRayMultiThreading = [&](uint32_t rowStart, uint32_t rowEnd)
         {
-            std::string a = "start rendering row : " + std::to_string(rowStart) + " to " + std::to_string(rowEnd);
-            std::cout << a << std::endl;
+            // std::string a = "start rendering row : " + std::to_string(rowStart) + " to " + std::to_string(rowEnd);
+            // std::cout << a << std::endl;
             for(uint32_t i = 0; i < scene->width; ++i)
             {
                 for(uint32_t j = rowStart; j < rowEnd; ++j)
