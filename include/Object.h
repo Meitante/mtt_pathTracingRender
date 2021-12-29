@@ -3,6 +3,7 @@
 
 #include "BoundingBox.h"
 #include "Material.h"
+#include "OBJ_Loader.hpp"
 
 
 
@@ -10,6 +11,9 @@
 /*
     An abstract class for all kinds of objects.
 */
+
+namespace objl
+{}
 
 class Object
 {
