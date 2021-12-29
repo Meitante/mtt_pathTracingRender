@@ -6,10 +6,24 @@ Scene::Scene(unsigned int w, unsigned int h)
 :width(w)
 ,height(h)
 ,eyePos(0, 0, 0)
+,bvh(nullptr)
 {
     backgroundColor = {0.25, 0.5, 0.75};
 }
 
+void Scene::buildBVH()
+{
+    if(nullptr != bvh)
+    {
+        delete bvh;
+    }
+    bvh = new BVH(objectList, 1, BVH::SplitMethod::NAIVE);
+}
+
+Scene::~Scene()
+{
+    delete bvh;
+}
 
 void Scene::setEyePos(const Eigen::Vector3f& in_eyePos)
 {
@@ -17,7 +31,7 @@ void Scene::setEyePos(const Eigen::Vector3f& in_eyePos)
 }
 
 
-void Scene::addObject(std::unique_ptr<Object> obj)
+void Scene::addObject(std::shared_ptr<Object> obj)
 {
     objectList.push_back(std::move(obj));
 }
@@ -25,24 +39,25 @@ void Scene::addObject(std::unique_ptr<Object> obj)
 Intersection Scene::getIntersectionWithRay(const Ray& ray)
 {
     // TODO: implement BVH
-    Intersection resIntersection;
-    for(int i = 0; i < objectList.size(); ++i)
-    {   
-        if(objectList[i]->getBoundingBox().isIntersectedWithRay(ray))
-        {
-            auto intersection = objectList[i]->getIntersectionWithRay(ray);
-            if(intersection.isHappened and intersection.tOfRayWhenIntersected < resIntersection.tOfRayWhenIntersected)
-            {
-                resIntersection = intersection;
-            }
-        }
-    }
-    return resIntersection;
+    // Intersection resIntersection;
+    // for(int i = 0; i < objectList.size(); ++i)
+    // {   
+    //     if(objectList[i]->getBoundingBox().isIntersectedWithRay(ray))
+    //     {
+    //         auto intersection = objectList[i]->getIntersectionWithRay(ray);
+    //         if(intersection.isHappened and intersection.tOfRayWhenIntersected < resIntersection.tOfRayWhenIntersected)
+    //         {
+    //             resIntersection = intersection;
+    //         }
+    //     }
+    // }
+    // return resIntersection;
+    return bvh->getInsectionWithRay(ray);
 }
 
 void Scene::sampleLight(Intersection& intersection, float& pdf) const
 {
-    for (uint32_t k = 0; k < objectList.size(); ++k)
+    for (unsigned int k = 0; k < objectList.size(); ++k)
     {
         if (objectList[k]->hasEmission())
         {
@@ -53,7 +68,7 @@ void Scene::sampleLight(Intersection& intersection, float& pdf) const
     return;
 
     float emit_area_sum = 0;
-    for (uint32_t k = 0; k < objectList.size(); ++k)
+    for (unsigned int k = 0; k < objectList.size(); ++k)
     {
         if (objectList[k]->hasEmission())
         {
@@ -62,7 +77,7 @@ void Scene::sampleLight(Intersection& intersection, float& pdf) const
     }
     float p = getRandomFloat() * emit_area_sum;
     emit_area_sum = 0;
-    for (uint32_t k = 0; k < objectList.size(); ++k)
+    for (unsigned int k = 0; k < objectList.size(); ++k)
     {
         if (objectList[k]->hasEmission())
         {

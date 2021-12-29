@@ -56,8 +56,21 @@ bool BoundingBox::isIntersectedWithRay(const Ray& ray)
 	return tEnter <= tExit && tExit >= 0;
 }
 
+Eigen::Vector3f BoundingBox::getCentroid() const
+{
+	return (0.5 * pMax + 0.5 * pMin);
+}
 
-
+int BoundingBox::getTheDimensionWithMaxLength() const
+{
+	Eigen::Vector3f d = getDiagonal();
+	if (d.x() > d.y() && d.x() > d.z())
+		return 0;
+	else if (d.y() > d.z())
+		return 1;
+	else
+		return 2;
+}
 
 
 

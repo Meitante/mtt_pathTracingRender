@@ -20,6 +20,7 @@ set(srcList
     src/Sphere.cpp
     src/Material.cpp
     src/Triangle.cpp
+    src/BVH.cpp
 )
 
 # SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/lib)

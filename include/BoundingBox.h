@@ -22,6 +22,8 @@ public:
 
     Eigen::Vector3f getDiagonal() const;
     bool isIntersectedWithRay(const Ray& ray);
+    Eigen::Vector3f getCentroid() const;
+    int getTheDimensionWithMaxLength() const;
 
 public:
     Eigen::Vector3f pMin = {0, 0, 0};
@@ -48,6 +50,17 @@ inline BoundingBox getUnion(const BoundingBox& b1, const BoundingBox& b2)
     {
         res.pMin[i] = std::min(b1.pMin[i], b2.pMin[i]);
         res.pMax[i] = std::max(b1.pMax[i], b2.pMax[i]);
+    }
+    return res;
+}
+
+inline BoundingBox getUnion(const BoundingBox& b, const Eigen::Vector3f& p)
+{
+    BoundingBox res;
+    for(int i = 0; i < 3; i++)
+    {
+        res.pMin[i] = std::min<float>(b.pMin[i], p[i]);
+        res.pMax[i] = std::max<float>(b.pMax[i], p[i]);
     }
     return res;
 }

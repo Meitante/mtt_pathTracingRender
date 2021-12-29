@@ -33,23 +33,23 @@ int main()
     auto m2 = Material(Material::MaterialType::DIFFUSE);
     m2.setDiffuseKd(Eigen::Vector3f(0.0f, 0.4f, 0.6f));
 
-    auto sphere1 = std::make_unique<Sphere>(0, 0, -200, 50);
+    auto sphere1 = std::make_shared<Sphere>(0, 0, -200, 50);
     sphere1->material = m1;
-    auto sphere2 = std::make_unique<Sphere>(-300, -300, -150, 100);
+    auto sphere2 = std::make_shared<Sphere>(-300, -300, -150, 100);
     sphere2->material = m2;
-    auto sphere3 = std::make_unique<Sphere>(-100, -400, -100, 50);
+    auto sphere3 = std::make_shared<Sphere>(-100, -400, -100, 50);
     sphere3->material = m2;
-    auto sphere4 = std::make_unique<Sphere>(300, 200, -200, 70);
+    auto sphere4 = std::make_shared<Sphere>(300, 200, -200, 70);
     sphere4->material = m2;
-    auto sphere5 = std::make_unique<Sphere>(100, 500, -300, 130);
+    auto sphere5 = std::make_shared<Sphere>(100, 500, -300, 130);
     sphere5->material = m2;
-    auto sphere6 = std::make_unique<Sphere>(-1500, 0, 0, 800);
+    auto sphere6 = std::make_shared<Sphere>(-1500, 0, 0, 800);
     sphere6->material = m2;
-    auto triangle1 = std::make_unique<Triangle>(Eigen::Vector3f(500, 500, -300),
+    auto triangle1 = std::make_shared<Triangle>(Eigen::Vector3f(500, 500, -300),
                                                 Eigen::Vector3f(100, 0, -400),
                                                 Eigen::Vector3f(1000, 0, 200));
     triangle1->material = m2;
-    auto triangle2 = std::make_unique<Triangle>(Eigen::Vector3f(500, -400, -300),
+    auto triangle2 = std::make_shared<Triangle>(Eigen::Vector3f(500, -400, -300),
                                                 Eigen::Vector3f(450, -500, -400),
                                                 Eigen::Vector3f(600, -500, -300));
     triangle2->material = m2;
@@ -65,6 +65,9 @@ int main()
     scene->addObject(std::move(sphere6));
     scene->addObject(std::move(triangle1));
     scene->addObject(std::move(triangle2));
+
+    scene->buildBVH();
+
     Renderer r(std::move(scene), "test.ppm");
     r.renderWithTimestampLogged();
     return 0;
