@@ -1,6 +1,10 @@
 #ifndef PATHTRACING_MATERIAL_H
 #define PATHTRACING_MATERIAL_H
 
+#if __INTELLISENSE__
+#undef __ARM_NEON
+#undef __ARM_NEON__
+#endif
 #include <eigen3/Eigen/Eigen>
 #include <cmath>
 #include "utility.hpp"
@@ -13,7 +17,7 @@ public:
         DIFFUSE
     };
     Material(MaterialType t = MaterialType::DIFFUSE, Eigen::Vector3f m = {0, 0, 0});
-
+    
     bool hasEmission() const;
     Eigen::Vector3f sample(const Eigen::Vector3f& wi, const Eigen::Vector3f N) const;
     float getPDF(const Eigen::Vector3f &wi, const Eigen::Vector3f &wo, const Eigen::Vector3f &N) const;

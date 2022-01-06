@@ -1,6 +1,10 @@
 #ifndef PATHTRACING_RENDERER_H
 #define PATHTRACING_RENDERER_H
 
+#if __INTELLISENSE__
+#undef __ARM_NEON
+#undef __ARM_NEON__
+#endif
 #include <iostream>
 #include <fstream>
 #include <string>

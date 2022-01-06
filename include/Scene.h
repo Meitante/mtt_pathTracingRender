@@ -1,6 +1,10 @@
 #ifndef PATHTRACING_SCENE_H
 #define PATHTRACING_SCENE_H
 
+#if __INTELLISENSE__
+#undef __ARM_NEON
+#undef __ARM_NEON__
+#endif
 #include <eigen3/Eigen/Eigen>
 #include <iostream>
 #include <vector>

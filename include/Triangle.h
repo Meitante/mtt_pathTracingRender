@@ -1,5 +1,9 @@
 #ifndef PATHTRACING_TRIANGLE_H
 #define PATHTRACING_TRIANGLE_H
+#if __INTELLISENSE__
+#undef __ARM_NEON
+#undef __ARM_NEON__
+#endif
 #include <eigen3/Eigen/Eigen>
 #include "Object.h"
 

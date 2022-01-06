@@ -28,3 +28,13 @@ Entering the build directory, run
 ```
 python3 ../testUT.py
 ```
+
+## Some note
+you may find there are codes like 
+```
+#if __INTELLISENSE__
+#undef __ARM_NEON
+#undef __ARM_NEON__
+#endif
+```
+it is to fix some vscode bug in my environment. Please refer to https://github.com/microsoft/vscode-cpptools/issues/7413
