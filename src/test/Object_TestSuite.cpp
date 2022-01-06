@@ -23,3 +23,8 @@ TEST(Object_TestSuite, samplePointShouldBeInsideTriangle)
         ASSERT_TRUE(triangle.isInside(intersection.coordinate));
     }
 }
+
+/*
+    MeshTriangle Test
+*/
+

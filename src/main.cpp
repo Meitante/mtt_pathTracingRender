@@ -12,7 +12,10 @@
 // TODO: the mapping from radiance to RGB
 // Done: time record
 // TODO: DIFFUSE kd/understand it.
+// TODO: introduce mesh triangle
 
+
+// TODO: material to shared_ptr
 int main()
 {
     auto scene = std::make_unique<Scene>(480, 270);

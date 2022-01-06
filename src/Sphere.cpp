@@ -1,6 +1,6 @@
 #include "Sphere.h"
 #include "Intersection.h"
-#include <_stdio.h>
+
 
 
 Sphere::Sphere(const Eigen::Vector3f& pos, float r)
