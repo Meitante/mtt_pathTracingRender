@@ -27,17 +27,17 @@ void ModelTransformation::setRotation(float xTheta, float yTheta, float zTheta)
 
     yTheta = getRadianFromDegree(yTheta);
     Eigen::Matrix4f aroundY;
-    aroundY <<           1,                 0,                 0,                 0,
-                         0,  std::cos(yTheta), -std::sin(yTheta),                 0,
-                         0,  std::sin(yTheta),  std::cos(yTheta),                 0,
-                         0,                 0,                 0,                 1;   
+    aroundY << std::cos(yTheta),                 0, -std::sin(yTheta),                 0,
+                              0,                 1,                 0,                 0,
+               std::sin(yTheta),                 0,  std::cos(yTheta),                 0,
+                              0,                 0,                 0,                 1;   
 
     zTheta = getRadianFromDegree(zTheta);
     Eigen::Matrix4f aroundZ;
-    aroundZ <<           1,                 0,                 0,                 0,
-                         0,  std::cos(zTheta), -std::sin(zTheta),                 0,
-                         0,  std::sin(zTheta),  std::cos(zTheta),                 0,
-                         0,                 0,                 0,                 1;   
+    aroundZ << std::cos(zTheta),                 -std::sin(zTheta),                 0,                 0,
+               std::sin(zTheta),                  std::cos(zTheta),                 0,                 0,
+                              0,                                 0,                 1,                 0,
+                              0,                                 0,                 0,                 1;   
 
     rotation = aroundZ*(aroundY*aroundX);
 }

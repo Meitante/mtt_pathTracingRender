@@ -8,6 +8,8 @@
 
 constexpr float PI = 3.1415926;
 constexpr float RussianRoulette = 0.8;
+constexpr int numOfThreading = 8;
+constexpr int spp = 128;
 constexpr bool sw1 = false;
 
 /*

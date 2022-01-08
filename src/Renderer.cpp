@@ -99,12 +99,47 @@ void Renderer::render()
 
     float height = 2*scale*1;
     float width = imageAspectRatio * height;
-    int spp = 32;
+    
     int done = 0;
     /*
         multithreading or not.
     */
     if(true)
+    {
+        auto castRayMultiThreading = [&](uint32_t start)
+        {
+            for(uint32_t i = 0; i < scene->width; ++i)
+            {
+                for(uint32_t j = start; j < scene->height; j += numOfThreading)
+                {
+                    int m = getFramebufferPosFromXY(i, j);
+
+                    float x = -width/2 + width*(i + 0.5)/scene->width;
+                    float y = -height/2 + height*(j + 0.5)/scene->height;
+                    Eigen::Vector3f dir = Eigen::Vector3f(x, y, -1);
+                    dir.normalize();
+                    for(int k = 0; k < spp; ++k)
+                    {
+                        framebuffer[m] += scene->getColorByTracingRay(Ray(scene->eyePos, dir))/spp;
+                    }
+                    done++;
+                    std::lock_guard<std::mutex> g1(mutex_ins);
+                    UpdateProgress(done, scene->width * scene->height);
+                }
+            }
+        };
+        std::vector<std::thread> th(numOfThreading);
+        for(unsigned int i = 0; i < numOfThreading; i++)
+        {
+            th[i] = std::thread(castRayMultiThreading, i);
+        }
+        for (int i = 0; i < numOfThreading; i++)
+        {
+            th[i].join();
+        }
+        UpdateProgress(scene->width * scene->height, scene->width * scene->height);
+    }
+    else if(true)
     {
         auto castRayMultiThreading = [&](uint32_t rowStart, uint32_t rowEnd)
         {
@@ -132,7 +167,7 @@ void Renderer::render()
         };
 
         int id = 0;
-        constexpr int numOfThreading = 8;
+        
         std::vector<std::thread> th(numOfThreading);
 
         int strideY = (scene->height + 1) / (numOfThreading - 1);
