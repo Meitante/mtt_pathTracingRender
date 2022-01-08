@@ -1,8 +1,8 @@
 #include "Material.h"
 
-Material::Material(MaterialType t, Eigen::Vector3f m)
+Material::Material(MaterialType t, Eigen::Vector3f inEmission)
 :type(t)
-,emission(m)
+,emission(inEmission)
 ,diffuseKd(std::numeric_limits<float>::infinity(), 0, 0)
 {
 

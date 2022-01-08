@@ -15,7 +15,7 @@
 // TODO: introduce mesh triangle
 
 
-// TODO: material to shared_ptr
+// done: material to shared_ptr
 int main()
 {
     auto scene = std::make_unique<Scene>(480, 270);
@@ -31,10 +31,10 @@ int main()
                             18.4f * Eigen::Vector3f(0.737f+0.642f,0.737f+0.159f,0.737f));
     // Todo: figure out what is the map from raidance to this RGB or vector
     // (8.0f * Vector3f(0.747f+0.058f, 0.747f+0.258f, 0.747f) + 15.6f * Vector3f(0.740f+0.287f,0.740f+0.160f,0.740f) + 18.4f *Vector3f(0.737f+0.642f,0.737f+0.159f,0.737f))
-    auto m1 = Material(Material::MaterialType::DIFFUSE, aLight * 1000);
+    auto m1 = std::make_shared<Material>(Material::MaterialType::DIFFUSE, aLight * 1000);
     
-    auto m2 = Material(Material::MaterialType::DIFFUSE);
-    m2.setDiffuseKd(Eigen::Vector3f(0.0f, 0.4f, 0.6f));
+    auto m2 = std::make_shared<Material>(Material::MaterialType::DIFFUSE);
+    m2->setDiffuseKd(Eigen::Vector3f(0.0f, 0.4f, 0.6f));
 
     auto sphere1 = std::make_shared<Sphere>(0, 0, -200, 50);
     sphere1->material = m1;

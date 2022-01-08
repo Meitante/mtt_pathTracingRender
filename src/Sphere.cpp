@@ -8,6 +8,7 @@ Sphere::Sphere(const Eigen::Vector3f& pos, float r)
 ,centre(pos)
 ,radius(r)
 {
+    area = 4 * PI * radius;
     assert(r > -0.00001);
 }
 
@@ -28,7 +29,7 @@ BoundingBox Sphere::getBoundingBox() const
 
 float Sphere::getSurfaceArea() const
 {
-    return 4 * PI * radius;
+    return area;
 }
 
 void Sphere::Sample(Intersection& intersection, float& pdf) const

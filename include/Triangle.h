@@ -29,8 +29,7 @@ public:
     Eigen::Vector3f edge2; // vertex2 - vertex0
     Eigen::Vector3f normal;
     
-private:
-    float area;
+
 
 };
 

@@ -17,7 +17,7 @@ public:
     bool isHappened;
     Eigen::Vector3f coordinate;
     Eigen::Vector3f normal;
-    Material material;
+    std::shared_ptr<Material> material;
     float tOfRayWhenIntersected; // a recording value, not necesary
 };
 

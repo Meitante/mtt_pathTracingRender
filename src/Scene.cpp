@@ -97,12 +97,12 @@ Eigen::Vector3f Scene::getColorByTracingRay(const Ray& ray, int depth)
     Intersection intersection = getIntersectionWithRay(ray);
     if(intersection.isHappened)
     {
-        if(intersection.material.hasEmission())
+        if(intersection.material->hasEmission())
         {
-            return intersection.material.emission;
+            return intersection.material->emission;
             if(depth == 0)
             {
-                return intersection.material.emission;
+                return intersection.material->emission;
             }
             else
             {
@@ -139,8 +139,8 @@ Eigen::Vector3f Scene::getColorByTracingRay(const Ray& ray, int depth)
 
         if (light2obj.isHappened and (light2obj.coordinate - lightPos).norm() < 0.01f)
 		{
-            auto& lightEmission = lightIntersection.material.emission;
-			Eigen::Vector3f BRDF = intersection.material.getBRDF(ray.direction, lightDir, N);
+            auto& lightEmission = lightIntersection.material->emission;
+			Eigen::Vector3f BRDF = intersection.material->getBRDF(ray.direction, lightDir, N);
 			dirL = 1.0f * Eigen::Vector3f(lightEmission[0] * BRDF[0], lightEmission[1] * BRDF[1], lightEmission[2] * BRDF[2])
                     * lightDir.dot(N) 
                     * (-lightDir).dot(NN) / lightDistanceSquare / lightPDF;
@@ -159,15 +159,15 @@ Eigen::Vector3f Scene::getColorByTracingRay(const Ray& ray, int depth)
        if (getRandomFloat() < RussianRoulette)
 		{
             
-            Eigen::Vector3f nextDir = intersection.material.sample(-ray.direction, normalInObj);
+            Eigen::Vector3f nextDir = intersection.material->sample(-ray.direction, normalInObj);
             nextDir.normalize();
             Ray nextRay(objCoordinate, nextDir);
             Intersection nextInter = getIntersectionWithRay(nextRay);
 
-			if (nextInter.isHappened && !nextInter.material.hasEmission())
+			if (nextInter.isHappened && !nextInter.material->hasEmission())
 			{
-				float pdf = intersection.material.getPDF(ray.direction, nextDir, normalInObj);
-				Eigen::Vector3f BRDF = intersection.material.getBRDF(ray.direction, nextDir, normalInObj);
+				float pdf = intersection.material->getPDF(ray.direction, nextDir, normalInObj);
+				Eigen::Vector3f BRDF = intersection.material->getBRDF(ray.direction, nextDir, normalInObj);
                 Eigen::Vector3f colorFromTracingRay = getColorByTracingRay(nextRay, depth + 1);
 
 				indirL =  Eigen::Vector3f(colorFromTracingRay[0] * BRDF[0], colorFromTracingRay[1] * BRDF[1], colorFromTracingRay[2] * BRDF[2]) 

@@ -8,8 +8,9 @@ Triangle::Triangle(const Eigen::Vector3f& v0, const Eigen::Vector3f& v1, const E
 ,edge1(vertex1 - vertex0)
 ,edge2(vertex2 - vertex0)
 ,normal((edge1.cross(edge2)).normalized())
-,area((edge1.cross(edge2)).norm()*0.5f)
+
 {
+    area = (edge1.cross(edge2)).norm()*0.5f;
     assert(vertex0 != vertex1 and vertex1 != vertex2 and vertex2 != vertex0);
 }
 

@@ -20,6 +20,7 @@ class Object
 public:
     Object()
     :material()
+    ,area(0.0f)
     {};
     virtual ~Object(){};
 
@@ -35,11 +36,14 @@ public:
     virtual void Sample(Intersection& intersection, float& pdf) const = 0;
     virtual bool hasEmission() const
     {
-        return material.hasEmission();
+        return material->hasEmission();
     }
 
 public:
-    Material material;
+    std::shared_ptr<Material> material;
+
+protected:
+    float area;
 
 };
 
