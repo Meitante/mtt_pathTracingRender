@@ -57,15 +57,15 @@ Intersection Scene::getIntersectionWithRay(const Ray& ray)
 
 void Scene::sampleLight(Intersection& intersection, float& pdf) const
 {
-    for (unsigned int k = 0; k < objectList.size(); ++k)
-    {
-        if (objectList[k]->hasEmission())
-        {
-            objectList[k]->Sample(intersection, pdf);
-            break;
-        }
-    }
-    return;
+    // for (unsigned int k = 0; k < objectList.size(); ++k)
+    // {
+    //     if (objectList[k]->hasEmission())
+    //     {
+    //         objectList[k]->Sample(intersection, pdf);
+    //         break;
+    //     }
+    // }
+    // return;
 
     float emit_area_sum = 0;
     for (unsigned int k = 0; k < objectList.size(); ++k)
@@ -109,6 +109,7 @@ Eigen::Vector3f Scene::getColorByTracingRay(const Ray& ray, int depth)
                 return Eigen::Vector3f(0.0f, 0.0f, 0.0f);
             }
         }
+        
 
         auto& objCoordinate = intersection.coordinate;
         auto& normalInObj = intersection.normal;
@@ -139,6 +140,7 @@ Eigen::Vector3f Scene::getColorByTracingRay(const Ray& ray, int depth)
 
         if (light2obj.isHappened and (light2obj.coordinate - lightPos).norm() < 0.01f)
 		{
+            // std::cout << "we have direct fucking" << std::endl;
             auto& lightEmission = lightIntersection.material->emission;
 			Eigen::Vector3f BRDF = intersection.material->getBRDF(ray.direction, lightDir, N);
 			dirL = 1.0f * Eigen::Vector3f(lightEmission[0] * BRDF[0], lightEmission[1] * BRDF[1], lightEmission[2] * BRDF[2])

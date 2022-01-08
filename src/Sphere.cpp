@@ -17,6 +17,7 @@ Sphere::Sphere(float x, float y, float z, float r)
 ,centre(x, y, z)
 ,radius(r)
 {
+    area = 4 * PI * radius;
     assert(r > -0.00001);
 }
 

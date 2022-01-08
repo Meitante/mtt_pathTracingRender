@@ -3,6 +3,7 @@
 #include "Sphere.h"
 #include "Material.h"
 #include "Triangle.h"
+#include "MeshTriangle.h"
 
 /*
     This file is to test the output directly.
@@ -12,8 +13,8 @@
 // TODO: the mapping from radiance to RGB
 // Done: time record
 // TODO: DIFFUSE kd/understand it.
-// TODO: introduce mesh triangle
-
+// done: introduce mesh triangle
+// TODO: MVP
 
 // done: material to shared_ptr
 int main()
@@ -36,7 +37,7 @@ int main()
     auto m2 = std::make_shared<Material>(Material::MaterialType::DIFFUSE);
     m2->setDiffuseKd(Eigen::Vector3f(0.0f, 0.4f, 0.6f));
 
-    auto sphere1 = std::make_shared<Sphere>(0, 0, -200, 50);
+    auto sphere1 = std::make_shared<Sphere>(-300, 0, -200, 50);
     sphere1->material = m1;
     auto sphere2 = std::make_shared<Sphere>(-300, -300, -150, 100);
     sphere2->material = m2;
@@ -45,7 +46,7 @@ int main()
     auto sphere4 = std::make_shared<Sphere>(300, 200, -200, 70);
     sphere4->material = m2;
     auto sphere5 = std::make_shared<Sphere>(100, 500, -300, 130);
-    sphere5->material = m2;
+    sphere5->material = m1;
     auto sphere6 = std::make_shared<Sphere>(-1500, 0, 0, 800);
     sphere6->material = m2;
     auto triangle1 = std::make_shared<Triangle>(Eigen::Vector3f(500, 500, -300),
@@ -56,6 +57,8 @@ int main()
                                                 Eigen::Vector3f(450, -500, -400),
                                                 Eigen::Vector3f(600, -500, -300));
     triangle2->material = m2;
+    auto bunny = std::make_shared<MeshTriangle>(commonData::bunnyPath, m2);
+    
     /*
         fengexian first start test End
     */
@@ -68,6 +71,7 @@ int main()
     scene->addObject(std::move(sphere6));
     scene->addObject(std::move(triangle1));
     scene->addObject(std::move(triangle2));
+    scene->addObject(std::move(bunny));
 
     scene->buildBVH();
 
