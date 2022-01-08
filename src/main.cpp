@@ -4,6 +4,7 @@
 #include "Material.h"
 #include "Triangle.h"
 #include "MeshTriangle.h"
+#include "ModelTransformation.h"
 
 /*
     This file is to test the output directly.
@@ -19,9 +20,9 @@
 // done: material to shared_ptr
 int main()
 {
-    auto scene = std::make_unique<Scene>(480, 270);
+    // auto scene = std::make_unique<Scene>(480, 270);
     // auto scene = std::make_unique<Scene>(2160, 1600);
-    // auto scene = std::make_unique<Scene>(1080, 800);
+    auto scene = std::make_unique<Scene>(1080, 800);
     scene->setEyePos(Eigen::Vector3f(0, 0, 2000));
 
     /*
@@ -57,8 +58,13 @@ int main()
                                                 Eigen::Vector3f(450, -500, -400),
                                                 Eigen::Vector3f(600, -500, -300));
     triangle2->material = m2;
-    auto bunny = std::make_shared<MeshTriangle>(commonData::bunnyPath, m2);
     
+    ModelTransformation modelTransformation1;
+    modelTransformation1.setScale(1300, 1300, 1300);
+    modelTransformation1.setRotation(0, 0, 45);
+    modelTransformation1.setTranslation(0, 0, -250);
+    auto bunny = std::make_shared<MeshTriangle>(commonData::bunnyPath, m2, modelTransformation1);
+
     /*
         fengexian first start test End
     */

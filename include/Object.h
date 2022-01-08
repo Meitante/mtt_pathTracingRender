@@ -34,6 +34,7 @@ public:
         also output PDF
     */
     virtual void Sample(Intersection& intersection, float& pdf) const = 0;
+
     virtual bool hasEmission() const
     {
         return material->hasEmission();

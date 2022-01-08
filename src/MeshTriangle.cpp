@@ -1,7 +1,9 @@
 #include "MeshTriangle.h"
 
 
-MeshTriangle::MeshTriangle(const std::string& filename, std::shared_ptr<Material> inMaterial)
+MeshTriangle::MeshTriangle(const std::string& filename,
+                            std::shared_ptr<Material> inMaterial,
+                            const ModelTransformation& modelTransformation)
 :triangles()
 ,bvh(nullptr)
 ,boundingBox()
@@ -30,9 +32,10 @@ MeshTriangle::MeshTriangle(const std::string& filename, std::shared_ptr<Material
         // Find these three vertices.
         for (int j = 0; j < 3; j++)
         {
-            auto vertex = Eigen::Vector3f(mesh.Vertices[i + j].Position.X * 1000,
-                                          mesh.Vertices[i + j].Position.Y * 1000,
-                                          mesh.Vertices[i + j].Position.Z * 1000);
+            auto vertex = Eigen::Vector3f(mesh.Vertices[i + j].Position.X,
+                                          mesh.Vertices[i + j].Position.Y,
+                                          mesh.Vertices[i + j].Position.Z);
+            vertex = modelTransformation.getVectorAfterApplyOnVector(vertex);
             faceVertices[j] = vertex;
             // update the min and max vertex.
             minVertex = Eigen::Vector3f(std::min(minVertex.x(), vertex.x()),

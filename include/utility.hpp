@@ -65,5 +65,10 @@ inline void UpdateProgress(int done, int all)
     std::cout.flush();
 };
 
+inline float getRadianFromDegree(float Degree)
+{
+    return Degree * PI / 180;
+}
+
 
 #endif

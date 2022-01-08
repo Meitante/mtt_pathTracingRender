@@ -22,6 +22,7 @@ set(srcList
     src/Triangle.cpp
     src/BVH.cpp
     src/MeshTriangle.cpp
+    src/ModelTransformation.cpp
 )
 
 # SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/lib)

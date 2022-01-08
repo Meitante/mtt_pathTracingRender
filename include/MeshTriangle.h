@@ -5,6 +5,7 @@
 #include "Object.h"
 #include "Triangle.h"
 #include "BVH.h"
+#include "ModelTransformation.h"
 
 /*
     A class of a Object, but includes many meshes.
@@ -12,7 +13,9 @@
 class MeshTriangle: public Object
 {
 public:
-    MeshTriangle(const std::string& filename, std::shared_ptr<Material> inMaterial);
+    MeshTriangle(const std::string& filename,
+                 std::shared_ptr<Material> inMaterial,
+                 const ModelTransformation& modelTransformation = ModelTransformation());
     virtual BoundingBox getBoundingBox() const;
     virtual float getSurfaceArea() const;
     virtual Intersection getIntersectionWithRay(const Ray& ray);
