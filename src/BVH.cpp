@@ -112,7 +112,7 @@ BVH::BVHNode* BVH::buildNaiveBVH(std::vector<std::shared_ptr<Object>> objects)
         auto rightshapes = std::vector<std::shared_ptr<Object>>(middling, ending);
 
         assert(objects.size() == (leftshapes.size() + rightshapes.size()));
-        std::cout << "good" << std::endl;
+
         node->left = buildNaiveBVH(leftshapes);
         node->right = buildNaiveBVH(rightshapes);
 

@@ -38,7 +38,7 @@ void Scene::addObject(std::shared_ptr<Object> obj)
 
 Intersection Scene::getIntersectionWithRay(const Ray& ray)
 {
-    // TODO: implement BVH
+    // done: implement BVH
     // Intersection resIntersection;
     // for(int i = 0; i < objectList.size(); ++i)
     // {   

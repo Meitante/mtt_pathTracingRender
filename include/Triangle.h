@@ -11,6 +11,7 @@ class Triangle: public Object
 {
 public:
     Triangle(const Eigen::Vector3f& v0, const Eigen::Vector3f& v1, const Eigen::Vector3f& v2);
+    Triangle(const Eigen::Vector3f& v0, const Eigen::Vector3f& v1, const Eigen::Vector3f& v2, std::shared_ptr<Material> inMaterial);
     virtual BoundingBox getBoundingBox() const;
     virtual float getSurfaceArea() const;
     virtual Intersection getIntersectionWithRay(const Ray& ray);

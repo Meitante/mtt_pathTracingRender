@@ -1,7 +1,10 @@
 #include "MeshTriangle.h"
 
 
-MeshTriangle::MeshTriangle(const std::string& filename, const Material& inMaterial)
+MeshTriangle::MeshTriangle(const std::string& filename, std::shared_ptr<Material> inMaterial)
+:triangles()
+,bvh(nullptr)
+,boundingBox()
 {
     objl::Loader loader;
     if(!loader.LoadFile(filename))
@@ -39,8 +42,52 @@ MeshTriangle::MeshTriangle(const std::string& filename, const Material& inMateri
                                         std::max(maxVertex.y(), vertex.y()),
                                         std::max(maxVertex.z(), vertex.z()));
         }
-
-        triangles.emplace_back(faceVertices[0], faceVertices[1],
-                                faceVertices[2], material);
+        // TODO: a better transformation from triangle to object should be done here.
+        auto tri = std::shared_ptr<Object>(new Triangle(faceVertices[0], faceVertices[1],
+                                faceVertices[2], material));
+        triangles.push_back(tri);
     }
+
+    boundingBox = BoundingBox(minVertex, maxVertex);
+
+    std::vector<std::shared_ptr<Object>> trianglePointerList;
+    for(auto tri: triangles)
+    {
+        trianglePointerList.push_back(tri);
+        area += tri->getSurfaceArea();
+    }
+    bvh = std::make_unique<BVH>(trianglePointerList);
+}
+
+BoundingBox MeshTriangle::getBoundingBox() const
+{
+    return boundingBox;
+}
+
+float MeshTriangle::getSurfaceArea() const
+{
+    return area;
+}
+
+Intersection MeshTriangle::getIntersectionWithRay(const Ray& ray)
+{
+    assert(bvh != nullptr);
+    return bvh->getInsectionWithRay(ray);
+}
+
+void MeshTriangle::Sample(Intersection& intersection, float& pdf) const
+{
+    float thresholdP = getRandomFloat();
+    float thresholdArea = thresholdP * area;
+    int i = 0;
+    float areaSum = 0.0f;
+    for(i = 0; i < triangles.size();i++)
+    {
+        areaSum += triangles[i]->getSurfaceArea();
+        if(areaSum >= thresholdArea - 0.00001)
+        {
+            break;
+        }    
+    }
+    triangles[i]->Sample(intersection, pdf);
 }

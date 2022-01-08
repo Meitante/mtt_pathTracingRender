@@ -14,6 +14,12 @@ Triangle::Triangle(const Eigen::Vector3f& v0, const Eigen::Vector3f& v1, const E
     assert(vertex0 != vertex1 and vertex1 != vertex2 and vertex2 != vertex0);
 }
 
+Triangle::Triangle(const Eigen::Vector3f& v0, const Eigen::Vector3f& v1, const Eigen::Vector3f& v2, std::shared_ptr<Material> inMaterial)
+:Triangle(v0, v1, v2)
+{
+    material = inMaterial;
+}
+
 
 BoundingBox Triangle::getBoundingBox() const
 {

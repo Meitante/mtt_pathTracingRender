@@ -11,6 +11,17 @@ constexpr float RussianRoulette = 0.8;
 constexpr bool sw1 = false;
 
 /*
+    models path
+*/
+namespace commonData
+{
+constexpr char rootPath[] =  "../";
+constexpr char bunnyPath[] = "../models/bunny/bunny.obj";
+}
+
+
+
+/*
     x0 should be less than or equal to x1
 */
 inline bool solveQuadratic(const float &a, const float &b, const float &c, float &x0, float &x1)

@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include "MeshTriangle.h"
 #include "Sphere.h"
 #include "Triangle.h"
 #include "Intersection.h"
@@ -27,4 +28,8 @@ TEST(Object_TestSuite, samplePointShouldBeInsideTriangle)
 /*
     MeshTriangle Test
 */
-
+TEST(Object_TestSuite, tryToLoadBunny)
+{
+    auto material = std::make_shared<Material>(Material::MaterialType::DIFFUSE);
+    MeshTriangle bb(commonData::bunnyPath, material);
+}
